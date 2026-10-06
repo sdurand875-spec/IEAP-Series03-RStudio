@@ -77,8 +77,7 @@ data_clean <- data %>%
 print(data_clean)
 ```
 
-
-## Run the ANOVA 
+## Run the ANOVA
 
 ```{r}
 anova_results <- ezANOVA(
@@ -92,23 +91,54 @@ anova_results <- ezANOVA(
 
 anova_results$ANOVA
 ```
+
 ANOVA p-value:
 
 We format the p-value to avoid scientific notation and see the full number. That way, it's easier to interpret the results.
+
 ```{r}
 format(anova_results$ANOVA$p, scientific = FALSE, digits = 10)
 ```
+
+Interpretation:
+
 The ANOVA revealed significant main effects of GROUP and ID, as well as a significant GROUP × ID interaction, with all p-values below 0.01.
 
-Detailed ANOVA results: 
+Detailed ANOVA results:
 
-Effect of the GROUP: Movement Time is different between the three groups (p < 0.01).
+Effect of the GROUP: Movement Time is different between the three groups (p \< 0.01).
 
-Effect of ID: Movement Time is different between the two IDs (p < 0.01).
+Effect of ID: Movement Time is different between the two IDs (p \< 0.01).
 
-Interaction effect GROUPxID: The effect of ID on Movement Time depends on the GROUP (p < 0.01).
+Interaction effect GROUPxID: The effect of ID on Movement Time depends on the GROUP (p \< 0.01).
 
-## Plot the ANOVA
+## Plot Movement Time as a Function of Index of Difficulty
 
+```{r}
+install.packages("Hmisc", quiet = TRUE)
+library(Hmisc)
+```
 
+```{r interaction plot}
 
+interaction_plot_reference <- ggplot(data_clean) +
+  aes(x = ID, y = MovementTime, color = GROUP) +
+  # lines: one line type per group
+  stat_summary(fun = mean, geom = "line",
+               aes(group = GROUP, linetype = GROUP), alpha = 0.7) +
+  # error bars: mean ± 0.215 s, same size for all groups
+  stat_summary(fun.data = function(x) data.frame(y    = mean(x),
+                                                 ymin = mean(x) - 0.215,
+                                                 ymax = mean(x) + 0.215),
+               geom = "errorbar", width = 0.25, alpha = 0.7) +
+  # points: one shape per group
+  stat_summary(fun = mean, geom = "point",
+               aes(shape = GROUP), size = 1.5, alpha = 0.7) +
+  labs(x = "ID", y = "Movement Time (s)")
+
+show(interaction_plot_reference)
+```
+
+Interpretation:
+
+From the ANOVA analysis, we know already that the movement time increases as the index of difficulty. With the graph, we can see that the movement time is increasing strongly for the stroke patients group compared to the two other groups.
