@@ -1,0 +1,14 @@
+---
+title: "IEAP-Series03-Assignment"
+author: "Sarah Durand, Gaia Gassiole, Vidusha Thebuwana"
+format:
+  html: default
+  pdf: default
+---
+
+
+{{< include Section/section_1_gaia.qmd >}}
+
+{{< include Section/section_2_vidusha.qmd >}}
+
+{{< include Section/section_3_sarah.qmd >}}
