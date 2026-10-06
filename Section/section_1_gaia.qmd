@@ -92,7 +92,23 @@ anova_results <- ezANOVA(
 
 anova_results$ANOVA
 ```
+ANOVA p-value:
+
+We format the p-value to avoid scientific notation and see the full number. That way, it's easier to interpret the results.
+```{r}
+format(anova_results$ANOVA$p, scientific = FALSE, digits = 10)
+```
+The ANOVA revealed significant main effects of GROUP and ID, as well as a significant GROUP × ID interaction, with all p-values below 0.01.
+
+Detailed ANOVA results: 
+
+Effect of the GROUP: Movement Time is different between the three groups (p < 0.01).
+
+Effect of ID: Movement Time is different between the two IDs (p < 0.01).
+
+Interaction effect GROUPxID: The effect of ID on Movement Time depends on the GROUP (p < 0.01).
+
+## Plot the ANOVA
 
 
-Plot the ANOVA
 
