@@ -74,6 +74,26 @@ data_clean <- data %>%
 print(data_clean)
 ```
 
+```{r}
+library(ggplot2)
+```
+
+```{r}
+# Interaction between GROUP and ID, with error bars of +/- 0.5 SD around the mean
+interaction_plot_Group_ID <- ggplot(data_clean) +
+  aes(x = ID, y = MovementTime, color = GROUP) +
+  stat_summary(fun = mean, geom = "line", aes(group = GROUP)) +
+  stat_summary(fun.data = mean_sdl, fun.args = list(mult = .5),
+               geom = "errorbar", width = 0.01) +
+  stat_summary(fun = mean, geom = "point", shape = 21, fill = "white", size = 3) +
+  labs(title = "Interaction between GROUP and ID on MovementTime",
+       x = "ID",
+       y = "Mean MovementTime (s)") +
+  theme_minimal()
+
+print(interaction_plot_Group_ID)
+```
+
 # 1.4 Run the linear regression by GROUP
 
 First let's check the data types of each column. Linear regression requires a number not strings.
@@ -82,10 +102,11 @@ First let's check the data types of each column. Linear regression requires a nu
 str(data_clean)
 ```
 
-Since ID is a categorical variable and it is better to run the actual numeric values before fitting to the linear model. Since ID1 was 3.8 and ID2 was 5.43 the data can be manipulated as follows:
+Since ID is a categorical variable and it is better to run the actual numeric values before fitting to the linear model. Since ID1 was 3.8 and ID2 was 5.43 from the scientific paper, the data can be manipulated as follows:
 
 ```{r}
 data_reg <- data_clean %>%
+  # Create a new column called 'ID_num', ID1 is 3.8, ID2 is 5.43
   mutate(ID_num = case_when(
     ID == "ID1" ~ 3.8,
     ID == "ID2" ~ 5.43
@@ -98,17 +119,24 @@ Now that data type is stored properly. Let's run the linear model.
 ```{r}
 
 models <- data_reg %>%
+  # Split the data into separate group based on the 'GROUP' column
   group_by(GROUP) %>%
+  # Loop through each pile (.x) and calculate a linear model (lm) predicting MovementTime from ID_num
   group_map(~ lm(MovementTime ~ ID_num, data = .x))
+
+# Apply the actual group names (e.g., ap, cp, pp) as labels to the model list
 names(models) <- levels(data_reg$GROUP)
 
+# Loop that goes through each group name one by one (where 'g' represents the current name)
 for (g in names(models)) {
+  # Extract the math coefficients (intercept and slope) from the model belonging to group 'g'
   co <- coef(models[[g]])
+  # Print the final equation as text, with 3 decimal places
   cat("Group", g, ": MT =", round(co[1], 3), "+", round(co[2], 3), "* ID\n")
 }
 ```
 
-Interpretation of the data
+Interpretation of the data:
 
 | Group | Intercept (a) | Slope (b) | Meaning of the slope |
 |----|----|----|----|
