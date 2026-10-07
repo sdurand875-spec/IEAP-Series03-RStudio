@@ -1,9 +1,69 @@
----
-title: "Challenges and Lessons Learned"
-author: "Sarah Durand, Gaia Gassiole, Vidusha Thebuwana"
-format:
-  html: default
-  pdf: default
----
+## Challenges encountered and lessons learned
 
-## 
+### 1. Using Git as a team
+
+**Challenges**
+
+- **Keeping each branch up to date.** Several times, `git pull` did not work because local files had been modified (for example `.DS_Store`, a hidden file created automatically by macOS, or a section file modified by mistake). As a result, the local `main` branch was not up to date, and the work of the other team members did not appear.
+- **Merging in the right order.** After a Pull Request was merged, new commits pushed on the same branch were not automatically in `main`: a new Pull Request was needed.
+- **Typing errors in the terminal.** Two commands pasted on the same line (for example `git pullgit checkout -b ...`) were not executed, which created confusion.
+
+**Lessons learned**
+
+- Always run `git pull` on `main` before creating a new branch, and `git merge main` before opening a Pull Request.
+- Check `git status` before each commit, and only add the files that were actually modified (never `.DS_Store`).
+- Type Git commands one at a time, and read the message returned by Git before going further.
+
+### 2. Rendering the master document
+
+**Challenges**
+
+When the three sections were assembled, the master document did not render, even though each section worked on its own. Sarah Durand identified and fixed the causes one by one:
+
+- **Relative paths.** The path `"../data/Results.txt"` worked when running section 1.3 from the `Section/` folder, but not when rendering the master document from the main folder. It was replaced by `here::here("data", "Results.txt")`.
+- **Duplicated code and chunk labels.** Section 1.3 repeated the data loading and cleaning code of the master document, with the same chunk labels, which stopped the rendering and displayed the same tables twice. The duplicated code was removed.
+- **Unsaved files.** A correction did not appear in the report because the file had not been saved before rendering.
+- **Missing packages.** Some packages (`ez`, `Hmisc`, `here`) had to be installed on each computer.
+
+**Lessons learned**
+
+- Each sub-document should only contain its own part, and build on the objects created before it (`data_clean`, `data_reg`).
+- Use `here::here()` for file paths, so that the code works from any folder.
+- Give unique names to code chunks, or no names at all.
+- Save all files and render the master document regularly, not only at the end.
+
+### 3. Building the graph with ggplot2
+
+**Challenges**
+
+- **Understanding the target figure.** Reproducing Figure 3 required first understanding what each element represents: the means, the regression lines, the error bars (mean ± 0.5 SD) and the equations.
+- **Layers adding up.** Because the graph was built step by step (`fitts_plot <- fitts_plot + ...`), running the same chunk several times added the same layers again (for example the equations written on top of each other).
+- **Colours and order of the groups.** By default, ggplot orders the groups alphabetically. To obtain the same colours as in the article (pp in red), the order of the factor levels had to be changed with `factor()`.
+- **Axis limits.** Extending the regression lines beyond the data required `geom_blank()` combined with `fullrange = TRUE`.
+
+**Lessons learned**
+
+- Building a graph layer by layer makes each step easier to understand and to explain.
+- When a graph is built step by step, the chunks must be run in order, each one only once.
+- Colours in ggplot depend on the order of the factor levels.
+
+### 4. Organisation and integration of the report
+
+**Challenges**
+
+- **Wrong master document.** The content of the report was first written in a file named `IEAP Series 03 Assignment.qmd`, whereas the assignment required the master document to be `IEAP-Series03-Rstudio.qmd`. In addition, spaces in the file name caused problems when rendering (Quarto created several output folders, and the HTML file did not always show the latest version).
+- **Assembling work written separately.** Each section had been written and tested on its own, in its own folder. Once included in the master document, they did not fit together: some code was repeated, some paths no longer worked, and some objects were created twice.
+- **Reviewing and correcting the work of others.** To obtain a report that renders, Sarah Durand had to read the sections written by the other team members, understand how their code worked, and identify the errors. The difficulty was to **correct these errors without creating new ones**, and without losing any of their work. For example:
+  - in section 1.3, the data loading and cleaning code was a copy of the master document. Before removing it, we checked that the master document already loaded the libraries (`tidyverse`, `ez`) and created `data_clean`, so that the ANOVA of section 1.3 would still work;
+  - the data path was corrected so that it works both when running the section alone and when rendering the whole report;
+  - the report was rendered again after each correction, to check that nothing else was broken.
+- **Keeping a clean and readable report.** Duplicated code and duplicated tables made the report long and confusing (the same cleaning steps and the full `data_clean` table appeared twice). These duplicates were removed, so that each step of the analysis appears only once, in a logical order.
+
+**Lessons learned**
+
+- Read the grading criteria carefully at the beginning of the project, and set up the right file names from the start (without spaces).
+- Agree as a team, from the start, on **what goes in the master document and what goes in each section**, so that nobody repeats the work of the others.
+- Before modifying someone else's code, **understand what it does and what the rest of the report depends on**, and make one correction at a time.
+- **Render the full report after each correction**, to check immediately that the change did not create a new error.
+- Inform the team when modifying their files (for example in the Pull Request), so that everyone knows what was changed and why.
+- Integration takes time: it should be planned before the deadline, not only at the end.
