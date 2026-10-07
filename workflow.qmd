@@ -1,7 +1,49 @@
----
-title: "Team Workflow"
-author: "Sarah Durand, Gaia Gassiole, Vidusha Thebuwana"
-format:
-  html: default
-  pdf: default
----
+## Git workflow strategy
+
+### Repository organisation
+
+Sarah Durand created the public GitHub repository `IEAP-Series03-RStudio` and set up its structure. The project is organised around a **master Quarto document** (`IEAP-Series03-Rstudio.qmd`) and **sub-documents** stored in the `Section/` folder:
+
+| File | Content | Author |
+|-------------------|----------------------------|-------------------------|
+| `IEAP-Series03-Rstudio.qmd` | Master document: header, data loading and cleaning, includes | Sarah Durand |
+| `Section/section_1_gaia.qmd` | 1.3 ANOVA and interaction plot | Gaia Gassiole |
+| `Section/section_2_vidusha.qmd` | 1.4 Linear regression by group | Vidusha Thebuwana |
+| `Section/section_3_sarah.qmd` | 1.5 Graph for publication and 1.6 PDF export | Sarah Durand |
+
+The sub-documents are inserted into the master document with `{{< include >}}` when rendering. This structure allowed each team member to work on her own file without modifying the files of the others, which limited conflicts.
+
+### Use of branches
+
+Each team member worked on a **dedicated branch**:
+
+- `Section_Gaia` for question 1.3,
+- `Section_Vidusha` for question 1.4,
+- `Section_Sarah` for questions 1.5 and 1.6,
+- `Workflow` for the documentation of our workflow.
+
+The `main` branch was kept as the stable version of the report. Working on separate branches allowed us to progress on different questions in parallel, and to test our code without breaking the work of the others.
+
+### Merging with Pull Requests
+
+When a section was ready, it was merged into `main` through a **Pull Request** on GitHub (Pull Requests #1, #2 and #3). Before each merge, the branch was updated with the latest version of `main` (`git pull` and `git merge main`), so that each section could build on the previous ones (for example, section 1.5 uses `data_reg` created in section 1.4).
+
+### Commits
+
+We made small and frequent commits, with meaningful messages describing each step (for example *"Compute mean Movement Time by group and ID"* or *"Section 1.6: export the graph as an 8 x 6 inch PDF"*), with at least one commit per question.
+
+### Integration and final corrections
+
+Once the three sections were merged, Sarah Durand was in charge of the **integration of the whole report**. When rendering the master document, several problems appeared, and she corrected them:
+
+- the data path in section 1.3 (`"../data/Results.txt"`) only worked from the `Section/` folder: it was replaced by `here::here("data", "Results.txt")`, which works both interactively and when rendering;
+- duplicated chunk labels between the master document and section 1.3 stopped the rendering: the duplicated code was removed, as it was already in the master document;
+- the full `data_clean` table was printed in the report: it was replaced by `head(data_clean)`;
+- the content of the report was moved into `IEAP-Series03-Rstudio.qmd`, the master document required by the assignment;
+- the date, the link to the GitHub repository and the `LICENSE` file were added, and the final PDF was rendered.
+
+### What worked well
+
+- One file and one branch per person avoided most merge conflicts.
+- Pull Requests gave the team the opportunity to review each section before merging it into `main`.
+- The master/sub-document structure made the final report easy to assemble.
