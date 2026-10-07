@@ -213,3 +213,16 @@ The function `geom_smooth()` appears twice in our code:
 We chose to keep both on purpose, so that each step of our reasoning stays visible and easy to follow.
 
 The code could be simplified by keeping only the dashed `geom_smooth()` of Step 5. The final graph would look the same, because the short solid line of Step 3 is hidden under the solid line added by `geom_line()`.
+
+# 1.6 Export the graph as a PDF file for publication
+
+```{r}
+ggsave(
+  filename =here::here("Figure3_MT_vs_ID.pdf"),
+  plot = fitts_plot,
+  width =8,
+  height =6,
+  units = "in"
+)
+```
+
