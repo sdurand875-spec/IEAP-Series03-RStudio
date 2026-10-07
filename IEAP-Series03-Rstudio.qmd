@@ -1,6 +1,7 @@
 ---
 title: "IEAP-Series03-Assignment"
 author: "Sarah Durand, Gaia Gassiole, Vidusha Thebuwana"
+date: today
 format:
   html: default
   pdf: default
