@@ -5,7 +5,7 @@
 Sarah Durand created the public GitHub repository `IEAP-Series03-RStudio` and set up its structure. The project is organised around a **master Quarto document** (`IEAP-Series03-Rstudio.qmd`) and **sub-documents** stored in the `Section/` folder:
 
 | File | Content | Author |
-|-------------------|----------------------------|-------------------------|
+|--------------------------------|----------------------------|----------|
 | `IEAP-Series03-Rstudio.qmd` | Master document: header, data loading and cleaning, includes | Sarah Durand |
 | `Section/section_1_gaia.qmd` | 1.3 ANOVA and interaction plot | Gaia Gassiole |
 | `Section/section_2_vidusha.qmd` | 1.4 Linear regression by group | Vidusha Thebuwana |
