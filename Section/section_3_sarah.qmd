@@ -31,7 +31,7 @@ The `group_means` table contains the mean movement time for each group and diffi
 
 ```{r}
 fitts_plot <- ggplot(data = group_means, aes(x =ID_num, y =mean_MovementTime, color =GROUP)) +
-  geom_point()
+  geom_point() 
 
 fitts_plot
 ```
@@ -44,7 +44,7 @@ To examine the relationship between the Index of Difficulty and Movement Time fo
 fitts_plot <- ggplot(data = group_means, aes(x =ID_num, y =mean_MovementTime, color =GROUP)) +
   geom_point()
 
-fitts_plot <- fitts_plot + geom_smooth(method = "lm", se = FALSE)
+fitts_plot <- fitts_plot + geom_smooth(method = "lm", se = FALSE, linewidth =0.5) 
 
 fitts_plot
 ```
@@ -78,7 +78,7 @@ We write these equations on the graph with `annotate()`, in the top-left corner 
 fitts_plot <- fitts_plot +
   annotate("text", x = 0, y = 6.5, label = "ap: MT = 0.372 + 0.165 * ID", hjust = 0,color = "#F8766D")+
   annotate("text", x = 0, y = 6, label = "cp: MT = 0.366 + 0.123 * ID", hjust = 0, color = "#00BA38")+
-  annotate("text", x = 0, y = 5.5, label = "pp: MT = -0.259 + 0.898 * ID", hjust = 0, color = "#619CFF")
+  annotate("text", x = 0, y = 5.5, label = "pp: MT = -0.259 + 0.898 * ID", hjust = 0, color = "#619CFF") 
 
 fitts_plot
 
@@ -99,7 +99,7 @@ fitts_plot <- fitts_plot +
   geom_blank(data = data.frame(x = c(-0.5, 6.5), y = c(-1, 7)),
              aes(x = x, y = y), inherit.aes = FALSE) +
   # Regression lines extended to the edges of the graph, as dashed lines
-  geom_smooth(method = "lm", se = FALSE, fullrange = TRUE, linetype = "dashed")
+  geom_smooth(method = "lm", se = FALSE, fullrange = TRUE, linetype = "dashed",linewidth =0.3)
 
 
 # Step 2: connect the two means with a solid line
@@ -113,7 +113,17 @@ fitts_plot <- fitts_plot +
 
 # Step 4: display the means as white circles with a coloured outline
 fitts_plot <- fitts_plot +
-geom_point(shape = 21, fill = "white" , size = 4)
+geom_point(shape = 21, fill = "white" , size = 4) 
+
 
 fitts_plot
 ```
+
+```{r}
+fitts_plot <- fitts_plot + labs(x="ID", y="Mean MovementTime (s)")+ theme_classic()
+
+fitts_plot
+
+```
+
+
