@@ -2,7 +2,7 @@
 
 ### Load library
 
-```{r Load the libraries}
+```{r gaia-libraries}
 library(tidyverse)
 library(ez)
 ```
@@ -11,9 +11,9 @@ library(ez)
 
 ## Load data
 
-```{r Load data}
+```{r gaia-load-data}
 #data <- read_csv("data/Results.txt", delimiter = " ")
-data <- read.table("../data/Results.txt", header = TRUE, sep = "" , stringsAsFactors = TRUE)
+data <- read.table(here::here("data", "Results.txt"), header = TRUE, sep = "", stringsAsFactors = TRUE)
 ```
 
 We need to reorganize the data.
@@ -22,7 +22,7 @@ To do so, we count the number of data points for each combination of factors to 
 
 The following function looks for every unique combination of GROUP and ID in the dataset and tallies up the number of rows for each pair. It automatically generates a new column named n that contains these totals. we do that to check if the number of rows is the same for every combination.
 
-```{r Count data}
+```{r gaia-count-data}
 data_counts <- data %>%
   count(GROUP, ID)
 
