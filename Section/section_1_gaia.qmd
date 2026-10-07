@@ -1,1 +1,138 @@
-# 1.3 Data reorganization
+## **1.2 What library to answer the above questions?**
+
+### Load library
+
+```{r Load the libraries}
+library(tidyverse)
+library(ez)
+```
+
+## **1.3 Data reorganization**
+
+## Load data
+
+```{r Load data}
+#data <- read_csv("data/Results.txt", delimiter = " ")
+data <- read.table("../data/Results.txt", header = TRUE, sep = "" , stringsAsFactors = TRUE)
+```
+
+We need to reorganize the data.
+
+To do so, we count the number of data points for each combination of factors to check if there is missing data.
+
+The following function looks for every unique combination of GROUP and ID in the dataset and tallies up the number of rows for each pair. It automatically generates a new column named n that contains these totals. we do that to check if the number of rows is the same for every combination.
+
+```{r Count data}
+data_counts <- data %>%
+  count(GROUP, ID)
+
+print(data_counts)
+```
+
+For item 9 "pp ID3 400", the number of rows does not match the rest of the group 'PP', so we need to delete ID3. The fact that some data are missing is explained by some stroke patients not being able to perform the test at ID3.
+
+```{r}
+data %>%
+  filter(ID != "ID3") %>%
+  count(GROUP, ID)
+
+```
+
+Now let's look at other columns such as REP.
+
+```{r }
+data %>% 
+  filter(ID != "ID3") %>%
+  count(REP)
+```
+
+The number of repetitions for R3 is half the number of R1 and R2. Therefore, we delete R3 data from our data frame.
+
+```{r}
+
+data %>% 
+  filter(ID != "ID3") %>%
+  filter(REP != "R3") %>%
+  count(GROUP, ID, REP)
+```
+
+We created a tibble 3 × 2 to look for the number of participants in each group.
+
+```{r}
+data %>% 
+  filter(ID != "ID3") %>%
+  filter(REP != "R3") %>%
+  distinct(GROUP, SUBJ) %>%
+  count(GROUP, name='count')
+```
+
+Now we create a new variable to store the cleaned data.
+
+```{r}
+data_clean <- data %>% 
+  filter(ID != "ID3") %>% 
+  filter(REP != "R3")
+print(data_clean)
+```
+
+## Run the ANOVA
+
+```{r}
+anova_results <- ezANOVA(
+  data = data_clean,
+  dv = .(MovementTime),# dependent variable
+  wid = .(SUBJ),# to recognize each participant
+  within = .(ID),# within-subject factor
+  between = .(GROUP), # between-subject factor 
+  detailed = FALSE
+)
+
+anova_results$ANOVA
+```
+
+ANOVA p-value:
+
+We format the p-value to avoid scientific notation and see the full number. That way, it's easier to interpret the results.
+
+```{r}
+format(anova_results$ANOVA$p, scientific = FALSE, digits = 10)
+```
+
+Interpretation:
+
+The ANOVA revealed significant main effects of GROUP and ID, as well as a significant GROUP × ID interaction, with all p-values below 0.01.
+
+Detailed ANOVA results:
+
+Effect of the GROUP: Movement Time is different between the three groups (p \< 0.01).
+
+Effect of ID: Movement Time is different between the two IDs (p \< 0.01).
+
+Interaction effect GROUPxID: The effect of ID on Movement Time depends on the GROUP (p \< 0.01). That is to say, Movement Time differs between the groups depending on the ID. For now, we do not know the direction of the effect, but we will see it in the graph below.
+
+## Plot Movement Time as a Function of Index of Difficulty
+
+```{r interaction plot}
+
+interaction_plot_reference <- ggplot(data_clean) +
+  aes(x = ID, y = MovementTime, color = GROUP) +
+  # lines: one line type per group
+  stat_summary(fun = mean, geom = "line",
+               aes(group = GROUP, linetype = GROUP), alpha = 0.7) +
+  # error bars: mean ± 0.215 s, same size for all groups
+  stat_summary(fun.data = function(x) data.frame(y    = mean(x),
+                                                 ymin = mean(x) - 0.215,
+                                                 ymax = mean(x) + 0.215),
+               geom = "errorbar", width = 0.25, alpha = 0.7) +
+  # points: one shape per group
+  stat_summary(fun = mean, geom = "point",
+               aes(shape = GROUP), size = 1.5, alpha = 0.7) +
+  labs(x = "ID", y = "Movement Time (s)")
+
+show(interaction_plot_reference)
+```
+
+Interpretation:
+
+From the ANOVA analysis, we already know that there is a significant interaction effect between GROUP and ID.
+From the graph, we can see that Movement Time increases as the Index of Difficulty increases in all three groups. However, this increase is much stronger in the stroke patients group compared to the two other groups.
