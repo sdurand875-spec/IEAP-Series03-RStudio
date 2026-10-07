@@ -6,6 +6,7 @@ format:
   html: default
   pdf: default
 ---
+**GitHub repository:** <https://github.com/sdurand875-spec/IEAP-Series03-RStudio>
 
 # **IEAP-Rstudio-Series03**
 
@@ -117,4 +118,8 @@ head(data_clean)
 {{< include Section/section_2_vidusha.qmd >}}
 
 {{< include Section/section_3_sarah.qmd >}}
+
+{{< include workflow.qmd >}}
+
+{{< include challenges.qmd >}}
 
