@@ -26,7 +26,7 @@ The following function looks for every unique combination of GROUP and ID in the
 data_counts <- data %>%
   count(GROUP, ID)
 
-print(data_counts)
+head(data_clean)
 ```
 
 For item 9 "pp ID3 400", the number of rows does not match the rest of the group 'PP', so we need to delete ID3. The fact that some data are missing is explained by some stroke patients not being able to perform the test at ID3.
@@ -72,7 +72,7 @@ Now we create a new variable to store the cleaned data.
 data_clean <- data %>% 
   filter(ID != "ID3") %>% 
   filter(REP != "R3")
-print(data_clean)
+head(data_clean)
 ```
 
 ## Run the ANOVA
