@@ -67,9 +67,9 @@ for (g in names(models)) {
 Interpretation of the data:
 
 | Group | Intercept (a) | Slope (b) | Meaning of the slope |
-|----|----|----|----|
+|------------------|------------------|------------------|------------------|
 | ap | 0.372 s | 0.165 s/bit | each extra bit of difficulty adds about 0.17 s |
 | cp | 0.366 s | 0.123 s/bit | each extra bit adds about 0.12 s |
 | pp | -0.259 s | 0.898 s/bit | each extra bit adds about 0.90 s |
 
-The pp group adds around 0.9s for each difficlutly level. This figure is much larger compared to the figures of ap(0.17s) and cp(0.12s).
+The pp group adds around 0.9s per unit increase in ID. This figure is much larger compared to the figures of ap(0.17s) and cp(0.12s).
