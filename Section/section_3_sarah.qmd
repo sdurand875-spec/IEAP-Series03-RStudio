@@ -1,2 +1,119 @@
 # 1.5 Save a graph in a PDF file for publication
 
+### Calculation of mean Movement Time by group and difficulty
+
+To create the graph, we calculate the **mean Movement Time** for each group (`ap`, `cp`, and `pp`) at each difficulty level (3.8 and 5.43 bits). This gives us **6 mean values**, which correspond to the 6 points shown on the graph.
+
+We use `ID_num` to represent the difficulty levels numerically on the x-axis, which allows us to plot the regression lines.
+
+We also compute the standard deviation, which will be used for the error bars.
+
+```{r}
+# Compute the mean and standard deviation of Movement Time for each group and each difficulty level
+group_means <- data_reg %>%
+  # Split the trials by group (ap, cp, pp) and by difficulty (3.8 and 5.43 bits)
+  group_by(GROUP, ID_num) %>%
+  # For each combination, compute the mean and the standard deviation of Movement Time
+  summarise(
+    mean_MovementTime = mean(MovementTime),
+    sd_MovementTime = sd(MovementTime),
+    # Remove the grouping once the values are computed
+    .groups = "drop"
+  )
+
+# Display the table (6 rows: 3 groups x 2 difficulty levels)
+group_means
+```
+
+### Step: convert the table into a chart
+
+The `group_means` table contains the mean movement time for each group and difficulty level. We use `ggplot2` to plot these values, with the difficulty level (`ID_num`) on the x-axis, the mean movement time on the y-axis, and a different color for each group.
+
+```{r}
+fitts_plot <- ggplot(data = group_means, aes(x =ID_num, y =mean_MovementTime, color =GROUP)) +
+  geom_point()
+
+fitts_plot
+```
+
+### step: regression lines
+
+To examine the relationship between the Index of Difficulty and Movement Time for each group, we add linear regression lines to the graph. The `geom_smooth()` function can automatically fit a regression model using the `lm` method. Here, `lm` refers to the linear model function available in R. It uses the data to automatically calculate the best-fitting regression line, including its slope and intercept, for each group. Therefore, we do not need to calculate the slope manually.
+
+```{r}
+fitts_plot <- ggplot(data = group_means, aes(x =ID_num, y =mean_MovementTime, color =GROUP)) +
+  geom_point()
+
+fitts_plot <- fitts_plot + geom_smooth(method = "lm", se = FALSE)
+
+fitts_plot
+```
+
+### Step: add the equations to the graph
+
+Each regression line follows the equation of a straight line:
+
+**y = a × x + b**
+
+| Letter | Mathematical name | In our graph |
+|-----------------|--------------------------------|-----------------------|
+| y | the measured variable (vertical axis) | MT, the movement time |
+| x | the variable we change (horizontal axis) | ID, the index of difficulty |
+| a | the slope | computed by `lm` |
+| b | the intercept | computed by `lm` |
+
+So, for each group: **MT = b + a x ID**
+
+The values of a and b were already computed with `lm` in section 1.4:
+
+| Group | Intercept (b) | Slope (a) |
+|-------|---------------|-----------|
+| ap    | 0.372         | 0.165     |
+| cp    | 0.366         | 0.123     |
+| pp    | -0.259        | 0.898     |
+
+We write these equations on the graph with `annotate()`, in the top-left corner where there is free space.
+
+```{r}
+fitts_plot <- fitts_plot +
+  annotate("text", x = 0, y = 6.5, label = "ap: MT = 0.372 + 0.165 * ID", hjust = 0,color = "#F8766D")+
+  annotate("text", x = 0, y = 6, label = "cp: MT = 0.366 + 0.123 * ID", hjust = 0, color = "#00BA38")+
+  annotate("text", x = 0, y = 5.5, label = "pp: MT = -0.259 + 0.898 * ID", hjust = 0, color = "#619CFF")
+
+fitts_plot
+
+```
+### Step: improvements to match the article
+
+To make our graph closer to Fig 3 of the article, we improve it in 4 sub-steps:
+
+1. **Extend the regression lines**: we use `geom_blank()` to enlarge the axes, and we extend the regression lines to the edges of the graph as dashed lines.
+2. **Connect the two means**: we add a solid line between the two points of each group.
+3. **Add error bars**: we show the variability between participants with vertical error bars.
+4. **Change the style of the points**: we display the means as white circles with a coloured outline.
+
+```{r}
+# Step 1: extend the axes with geom_blank() and the regression lines (dashed)
+fitts_plot <- fitts_plot +
+  # Invisible points used to enlarge the axes (x from -0.5 to 6.5, y from -1 to 7)
+  geom_blank(data = data.frame(x = c(-0.5, 6.5), y = c(-1, 7)),
+             aes(x = x, y = y), inherit.aes = FALSE) +
+  # Regression lines extended to the edges of the graph, as dashed lines
+  geom_smooth(method = "lm", se = FALSE, fullrange = TRUE, linetype = "dashed")
+
+
+# Step 2: connect the two means with a solid line
+fitts_plot <- fitts_plot + geom_line()
+
+# Step 3: add error bars
+fitts_plot <- fitts_plot +
+  geom_errorbar(aes(ymin =mean_MovementTime-0.5* sd_MovementTime ,
+                    ymax = mean_MovementTime+0.5* sd_MovementTime ),
+                width = 0)
+
+# Step 4: display the means as white circles with a coloured outline
+fitts_plot <- fitts_plot +
+geom_point(shape = 21, fill = "white" , size = 4)
+
+fitts_plot
+```
