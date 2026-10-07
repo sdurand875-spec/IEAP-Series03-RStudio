@@ -1,5 +1,3 @@
-# 1.3 Data reorganization
-
 ## **1.2 What library to answer the above questions?**
 
 ### Load library
@@ -110,14 +108,9 @@ Effect of the GROUP: Movement Time is different between the three groups (p \< 0
 
 Effect of ID: Movement Time is different between the two IDs (p \< 0.01).
 
-Interaction effect GROUPxID: The effect of ID on Movement Time depends on the GROUP (p \< 0.01).
+Interaction effect GROUPxID: The effect of ID on Movement Time depends on the GROUP (p \< 0.01). That is to say, Movement Time differs between the groups depending on the ID. For now, we do not know the direction of the effect, but we will see it in the graph below.
 
 ## Plot Movement Time as a Function of Index of Difficulty
-
-```{r}
-install.packages("Hmisc", quiet = TRUE)
-library(Hmisc)
-```
 
 ```{r interaction plot}
 
@@ -141,4 +134,5 @@ show(interaction_plot_reference)
 
 Interpretation:
 
-From the ANOVA analysis, we know already that the movement time increases as the index of difficulty. With the graph, we can see that the movement time is increasing strongly for the stroke patients group compared to the two other groups.
+From the ANOVA analysis, we already know that there is a significant interaction effect between GROUP and ID.
+From the graph, we can see that Movement Time increases as the Index of Difficulty increases in all three groups. However, this increase is much stronger in the stroke patients group compared to the two other groups.
