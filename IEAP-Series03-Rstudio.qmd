@@ -132,7 +132,7 @@ The conclusions stay the same because the effect is very large: the differences 
 
 
 
-## Data sources and references
+# Data sources and references
 
 ### Data source
 
@@ -149,3 +149,37 @@ The conclusions stay the same because the effect is very large: the differences 
 - Wickham, H., et al. (2019). Welcome to the tidyverse. *Journal of Open Source Software*, 4(43), 1686. <https://doi.org/10.21105/joss.01686>
 - Lawrence, M. A. *ez: Easy analysis and visualization of factorial experiments*. R package. <https://CRAN.R-project.org/package=ez>
 - Müller, K. *here: A simpler way to find your files*. R package. <https://CRAN.R-project.org/package=here>
+
+
+# Checklist
+
+We used the following checklist to make sure that our work meets all the requirements and grading criteria of the assignment.
+
+### Report content
+
+- [x] Authors and date in the header
+- [x] Clickable link to our public GitHub repository
+- [x] Analysis of our team's Git workflow strategy
+- [x] Analysis of the challenges encountered and lessons learned
+- [x] Complete code and answers to all the questions (1.1 to 1.7)
+- [x] Data sources (with their URLs)
+- [x] Scientific references (with their DOIs)
+- [x] Checklist used to meet the grading criteria
+
+### ANOVA pipeline and Quarto document
+
+- [x] Clear ANOVA pipeline, with an explanation of each step
+- [x] Master Quarto document (`IEAP-Series03-Rstudio.qmd`) in which the sub-documents are included when rendering
+- [x] Graph similar to Figure 3 of the article, with regression lines and equations
+- [x] Graph exported as an 8 × 6 inch PDF file
+
+### GitHub repository
+
+- [x] Public repository named `IEAP-Series03-RStudio`
+- [x] `main` branch up to date
+- [x] Clear and complete `README.md`
+- [x] `LICENSE` file
+- [x] Rendered PDF file of the report
+- [x] Clear Git history with meaningful commit messages
+- [x] At least one commit per question of the report
+- [x] Use of branches to work on different questions in parallel, merged into `main` with Pull Requests

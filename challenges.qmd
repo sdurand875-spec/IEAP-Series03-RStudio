@@ -1,4 +1,4 @@
-## Challenges encountered and lessons learned
+#Challenges encountered and lessons learned
 
 ### 1. Using Git as a team
 
