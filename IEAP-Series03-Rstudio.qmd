@@ -120,7 +120,11 @@ head(data_clean)
 {{< include Section/section_3_sarah.qmd >}}
 
 # 1.7 Discuss the differences with the article
+Our results are a little different from those of the article, because our method is simpler. We removed ID3 and R3 (missing data), we calculated the regressions on all the trials together and not for each participant, and we used error bars of ± 0.5 standard deviation.
 
+However, the conclusions are the same. In the three groups, movement time increases with difficulty (Fitts' law), but this increase is much stronger in the pp group (≈ 0.90 s/bit) than in the ap and cp groups (≈ 0.12 to 0.17 s/bit). The ANOVA confirms this with a significant GROUP × ID interaction.
+
+The conclusions stay the same because the effect is very large: the differences in method change the exact values, but not the meaning of the result. However, with only two difficulty levels, we cannot check that the relationship is really linear.
 
 {{< include workflow.qmd >}}
 
