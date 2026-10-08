@@ -5,6 +5,9 @@ date: today
 format:
   html: default
   pdf: default
+execute:
+  warning: false
+  message: false
 ---
 **GitHub repository:** <https://github.com/sdurand875-spec/IEAP-Series03-RStudio>
 
