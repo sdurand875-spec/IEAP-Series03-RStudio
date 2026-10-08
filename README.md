@@ -54,7 +54,6 @@ IEAP-Series03-RStudio/
 ├── IEAP-Series03-Rstudio.qmd
 ├── workflow.qmd
 ├── challenges.qmd
-├── references.bib
 └── data/
 ```
 
@@ -70,7 +69,6 @@ The structure may evolve as the project develops.
   collaboration strategy.
 - `challenges.qmd`: documentation of the challenges encountered
   and lessons learned.
-- `references.bib`: scientific references used in the report.
 - `data/`: directory for the datasets required for the analysis.
 
 ## 5. Statistical Analysis
@@ -142,10 +140,9 @@ The project uses the following tools:
 
 ## 9. Project Status
 
-**Current status:** Initial repository setup completed.
+**Current status:** Report completed.
 
-The team is preparing the project structure and collaborative
-workflow before completing the statistical analyses.
+All the questions of Series 03 have been answered. Each section was developed on its own branch and merged into `main` through Pull Requests. The final report is available in `IEAP-Series03-Rstudio.qmd` and its rendered version `IEAP-Series03-Rstudio.pdf`.
 
 ## 10. Final Deliverable
 
