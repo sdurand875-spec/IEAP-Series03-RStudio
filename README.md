@@ -12,10 +12,10 @@ through a structured statistical analysis conducted in R.
 The project combines statistical analysis, reproducible research,
 scientific interpretation, and collaborative software development.
 
-Our work will include a complete ANOVA pipeline, from data preparation
+Our work includes a complete ANOVA pipeline, from data preparation
 to the interpretation of statistical results.
 
-Each step of the analysis will be documented in a Quarto report, with
+Each step of the analysis is documented in a Quarto report, with
 the corresponding R code and explanations.
 
 ## 2. Team Members
@@ -51,10 +51,17 @@ supporting files.
 IEAP-Series03-RStudio/
 ├── README.md
 ├── LICENSE
-├── IEAP-Series03-Rstudio.qmd
+├── IEAP-Series03-Rstudio.qmd      # master document
+├── IEAP-Series03-Rstudio.pdf      # rendered report
+├── Figure3_MT_vs_ID.pdf           # graph exported for publication (8 x 6 in)
 ├── workflow.qmd
 ├── challenges.qmd
+├── Section/
+│   ├── section_1_gaia.qmd         # 1.3 ANOVA
+│   ├── section_2_vidusha.qmd      # 1.4 Linear regression by group
+│   └── section_3_sarah.qmd        # 1.5 Graph and 1.6 PDF export
 └── data/
+    └── Results.txt
 ```
 
 The structure may evolve as the project develops.
@@ -70,10 +77,13 @@ The structure may evolve as the project develops.
 - `challenges.qmd`: documentation of the challenges encountered
   and lessons learned.
 - `data/`: directory for the datasets required for the analysis.
+- `Section/`: sub-documents included in the master document (one per team member).
+- `IEAP-Series03-Rstudio.pdf`: final rendered report.
+- `Figure3_MT_vs_ID.pdf`: graph of Movement Time as a function of ID, exported for publication.
 
 ## 5. Statistical Analysis
 
-The statistical work will follow a structured analytical pipeline.
+The statistical work follows a structured analytical pipeline.
 
 The report will document the relevant steps, according to the
 questions in the assignment:
@@ -93,9 +103,9 @@ All relevant R code and answers will be included in the report.
 
 ## 6. Collaborative Workflow
 
-Git and GitHub will be used to organise the work and track changes.
+Git and GitHub were used to organise the work and track changes.
 
-The team will:
+The team:
 
 - Use branches to work on different questions in parallel.
 - Keep the `main` branch up to date.
@@ -108,12 +118,11 @@ The team will:
 The `main` branch will contain the final version submitted for
 evaluation.
 
-Further details about the actual workflow will be documented in
-`workflow.qmd`.
+Further details are documented in `workflow.qmd`.
 
 ## 7. Reproducibility and Documentation
 
-The final report will include:
+The final report includes:
 
 - The authors and date.
 - A link to this public GitHub repository.
@@ -146,8 +155,7 @@ All the questions of Series 03 have been answered. Each section was developed on
 
 ## 10. Final Deliverable
 
-The final report will be rendered as a PDF document and submitted
-on Moodle, as required by the assignment.
+The final report is rendered as a PDF document and submitted on Moodle.
 
 The `main` branch of this public repository will contain the
 final version of the project.
