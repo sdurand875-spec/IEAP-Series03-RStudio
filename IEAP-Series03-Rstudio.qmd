@@ -21,17 +21,29 @@ execute:
 
 The scientific question is:
 
-- Is the effect of difficulty different in patients with stroke compared to healthy?
+The overall question that we are trying to answer:
 
-  - How do you visualize this?
+Is the effect of difficulty the same in all groups?
 
-    - ggplot
+If we detail a bit more:
 
-  - Is there a significant difference?
+How the effect of difficulty on Movement Time differs between the three groups (stroke patients, age-matched controls, and young controls)?
 
-    - ANOVA?
+With the hypothesis that the effect of difficulty on Movement Time is stronger in the post stroke patients’ group than in the two control groups.
 
-  - What sentence should we write to state this result in a report?
+Questions that will guide us:
+
+How do you visualize this?
+
+To visualize it, we used graphs (ggplot in R). Indeed, we plotted Movement Time over Index of Difficulty, and we obtained 3 straight lines, one for each group. In the last graph we added the linear regression.
+
+Is there a significant difference?
+
+To answer this question, we used ANOVA, to state if there was a significant difference we used 0.01 as the alpha threshold.
+
+What sentence should we write to state this result in a report?
+
+The ANOVA revealed a significant GROUP × ID interaction (F (2, 48) = 11.58, p < 0.01), indicating that the effect of difficulty on Movement Time differs significantly between the three groups. As shown in the graph, Movement Time increases with difficulty in all three groups, but this increase is much stronger in the post stroke patients’ group than in the two control groups.
 
 ## **1.2 What library to answer the above questions?**
 
