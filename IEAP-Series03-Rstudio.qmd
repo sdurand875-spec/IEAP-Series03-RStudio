@@ -21,17 +21,23 @@ execute:
 
 The scientific question is:
 
-- Is the effect of difficulty different in patients with stroke compared to healthy?
+**Is the effect of difficulty on Movement Time the same across all groups?**
 
-  - How do you visualize this?
+More specifically, we aim to investigate how the effect of the Index of Difficulty (ID) on Movement Time differs between the three groups: stroke patients, age-matched controls, and young controls.
 
-    - ggplot
+We hypothesize that the effect of difficulty on Movement Time is stronger in the post-stroke patient group than in the two control groups.
 
-  - Is there a significant difference?
+**How do we visualize this?**
 
-    - ANOVA?
+We use graphs created with `ggplot2` in R to plot Movement Time against the Index of Difficulty for each group. The regression lines allow us to compare the relationship between difficulty and Movement Time across groups.
 
-  - What sentence should we write to state this result in a report?
+**Is there a significant difference?**
+
+We use an ANOVA to test whether the effect of difficulty on Movement Time differs between groups. The significance threshold is set at α = 0.01.
+
+**What conclusion can we draw?**
+
+The ANOVA revealed a significant GROUP × ID interaction (F (2, 48) = 11.58, p < 0.01), indicating that the effect of difficulty on Movement Time differs significantly between the three groups. As shown in the graph, Movement Time increases with difficulty in all three groups, but this increase is much stronger in the post stroke patients’ group than in the two control groups.
 
 ## **1.2 What library to answer the above questions?**
 
@@ -123,11 +129,14 @@ head(data_clean)
 {{< include Section/section_3_sarah.qmd >}}
 
 # 1.7 Discuss the differences with the article
-Our results are a little different from those of the article, because our method is simpler. We removed ID3 and R3 (missing data), we calculated the regressions on all the trials together and not for each participant, and we used error bars of ± 0.5 standard deviation.
 
-However, the conclusions are the same. In the three groups, movement time increases with difficulty (Fitts' law), but this increase is much stronger in the pp group (≈ 0.90 s/bit) than in the ap and cp groups (≈ 0.12 to 0.17 s/bit). The ANOVA confirms this with a significant GROUP × ID interaction.
+Our results may differ slightly from those reported in the article because we used a simpler analysis method.
 
-The conclusions stay the same because the effect is very large: the differences in method change the exact values, but not the meaning of the result. However, with only two difficulty levels, we cannot check that the relationship is really linear.
+First, we excluded observations corresponding to ID3 and repetition R3 during data cleaning. Second, we fitted separate linear regressions for each group using the trials pooled across participants, rather than fitting a separate regression for each participant. Finally, we represented variability using error bars corresponding to ±0.5 standard deviations.
+
+Despite these methodological differences, our results are consistent with the main conclusion of the article. Movement Time increases with the Index of Difficulty in all three groups, but the increase is much stronger in the post-stroke patient group (pp; slope ≈ 0.90 s/bit) than in the two control groups (ap and cp; slopes ≈ 0.17 and 0.12 s/bit, respectively). The significant GROUP × ID interaction in the ANOVA supports the conclusion that the effect of difficulty differs between groups.
+
+However, our analysis has limitations. In particular, using only two difficulty levels does not allow us to assess the linearity of the relationship over a wider range of difficulty levels. Moreover, pooling trials across participants does not account for individual differences in the regression slopes. Therefore, although our results support a similar overall interpretation, they should not be considered an exact replication of the analysis presented in the article.
 
 {{< include workflow.qmd >}}
 

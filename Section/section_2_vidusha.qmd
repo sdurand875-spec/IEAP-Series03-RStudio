@@ -64,7 +64,7 @@ for (g in names(models)) {
 
 Interpretation of the data:
 
-| Group | Intercept (a) | Slope (b) | Meaning of the slope |
+| Group | Intercept (b) | Slope (a) | Meaning of the slope |
 |------------------|------------------|------------------|------------------|
 | ap | 0.372 s | 0.165 s/bit | each extra bit of difficulty adds about 0.17 s |
 | cp | 0.366 s | 0.123 s/bit | each extra bit adds about 0.12 s |

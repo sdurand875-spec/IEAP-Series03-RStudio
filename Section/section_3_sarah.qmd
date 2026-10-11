@@ -95,21 +95,7 @@ fitts_plot <- ggplot(
 
 
 # ============================================================
-# Step 3: Add the linear regression lines
-# ============================================================
-
-# lm automatically estimates the slope and intercept
-# of the regression line for each group.
-fitts_plot <- fitts_plot +
-  geom_smooth(
-    method = "lm",
-    se = FALSE,
-    linewidth = 0.5
-  )
-
-
-# ============================================================
-# Step 4: Add the regression equations
+# Step 3: Add the regression equations
 # ============================================================
 
 # The regression coefficients were obtained in Section 1.4.
@@ -143,7 +129,7 @@ fitts_plot <- fitts_plot +
 
 
 # ============================================================
-# Step 5: Improve the graph to resemble Figure 3
+# Step 4: Improve the graph to resemble Figure 3
 # ============================================================
 
 # Extend the axes using invisible points.
@@ -159,13 +145,21 @@ fitts_plot <- fitts_plot +
 
   # Extend the regression lines to the edges of the graph
   # and display them as dashed lines.
-  geom_smooth(
-    method = "lm",
-    se = FALSE,
-    fullrange = TRUE,
-    linetype = "dashed",
-    linewidth = 0.3
-  ) +
+ geom_smooth(
+  data = data_reg,
+  mapping = aes(
+    x = ID_num,
+    y = MovementTime,
+    color = GROUP,
+    group = GROUP
+  ),
+  method = "lm",
+  se = FALSE,
+  fullrange = TRUE,
+  linetype = "dashed",
+  linewidth = 0.3,
+  inherit.aes = FALSE
+) +
 
   # Connect the two mean values of each group.
   geom_line() +
@@ -189,7 +183,7 @@ fitts_plot <- fitts_plot +
 
 
 # ============================================================
-# Step 6: Final formatting
+# Step 5: Final formatting
 # ============================================================
 
 fitts_plot <- fitts_plot +
@@ -205,14 +199,7 @@ fitts_plot
 
 #### Note on the code structure
 
-The function `geom_smooth()` appears twice in our code:
-
-- in **Step 3**, to show the basic regression line of each group;
-- in **Step 5**, to extend these lines to the edges of the graph as dashed lines, as in Figure 3 of the article.
-
-We chose to keep both on purpose, so that each step of our reasoning stays visible and easy to follow.
-
-The code could be simplified by keeping only the dashed `geom_smooth()` of Step 5. The final graph would look the same, because the short solid line of Step 3 is hidden under the solid line added by `geom_line()`.
+The regression lines are extended to the edges of the graph using `geom_smooth()` with `fullrange = TRUE`. They are displayed as dashed lines to distinguish them from the solid lines connecting the observed group means.
 
 # 1.6 Export the graph as a PDF file for publication
 
